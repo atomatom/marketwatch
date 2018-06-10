@@ -56,6 +56,8 @@ sheet_header_row = ['Ticker',
                     'Source',
                     ]
 
+sheet.append_row(sheet_header_row)
+
 csv_file = open('marketwatch_report.csv', 'w', encoding='utf-8')
 
 csv_writer = csv.writer(csv_file)
@@ -175,11 +177,9 @@ for symbol in sorted(ticker.keys()):
             marketwatch_url,
             ]
 
-    sheet.insert_row(data, 1)
+    sheet.append_row(data)
 
     csv_writer.writerow(data)
 
-
-sheet.insert_row(sheet_header_row, 1)
 
 csv_file.close()
