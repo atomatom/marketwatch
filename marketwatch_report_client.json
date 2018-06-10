@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "report-060918",
+  "private_key_id": "612ffbebb9388ba229cff73f8bcf010fbed2dd7c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCwXLwnPvOTTAyc\nj5k4mgFt6TUAnEJqty/rbS47b/PzdH+Amv9WhRQGLUL3/8/Nn8nDkumbH2DfhTdp\naJIpvAfl42GrJM2YdDlLRjOIYgczSRh2Yp4wvqTrQlBOOK6/W0SR7Jumeih5SypK\nFwWup2AqH5Gp4NtRB1m76baSWFpepfBEZI0+y7o6j1BeHu776epIUecxgINcJX6l\nuscDBEQXikHcLynWR1qTw8HvgARI5nwEF8gEnI87Lwb+nldtQxP8hJP4ocoLMXr5\nNlYxxB6EuFPUn1F5EyTUs7NDXgyQcju0EUfEphQ+DB4lEybxHvvA2dznCKvyDJC5\nQZCxAvIzAgMBAAECggEAOLDOkIUFUgtnoGnudEnY/MYykewo01noTvKtIlEF53PC\nyonIWzzy51tkRAjYeP4Mos/WRNVs09zkJ3+EQGMfXM/fJN7zMbbmdeJujUAJlXxB\nH0jrFbsqky8hVkuVLJC/dXLLw9NPsFGvmdpVqsNFv7SfI67SgPTubN+fHuLExdhj\nwO0ygN9jzdK6D/1tuQP8orVceMYCXG3hZwq5WdJLjB6018qiWZvzzufPFJJQWFbP\ncSx+kdwrFPcK/vWcDP/9YFQLRX9PdAOJpFQ3I6eW/GFzicdV2LzX0NttYZ4/Atqu\naWdLagucKnqZTogDoVZ6YtWPP83PIIaL0B0hYXA7zQKBgQDaLeH2uz9TnaRxLCek\nfLMV3nqY3JY0hIqJzlX4oFWOngtUX9CAd7W/gQaE2DZKvNfNjiJ6E+RlfT5G6psK\niL3HyLbxhdTQFLDVPTRCBGf9xknpilC0vum6srbmxUt/MVX3dzks7V8hMwebCGNS\n48h9qArs8B7kq94hQ3M0iVlRtQKBgQDO7yTyDdI66WuDps0razvXMaHMbmqc+WWl\nzLd6Pphnzl/ZcnwBxz4MtU6jLmusIrEMBOizKw7nmmTyukgB8zGYonErN/jNncfq\nvbq3c/XOcFM7b3m52TtsVf69fxFAGhKVkefWe1jVpXKyZ/JBV8YKAU6a7r2CcPEw\n+QF7xgnFRwKBgAhVLkclGaMQ50HnRNBUbuaL67TA3/+7fCsNNV1cikf7I0Wiryzo\n5Ykd3WjfdRtfoQJZxllRPyzdHq7IsQky9cSWlt4clWcpEyPhxYgr8OjRVOtVfAWb\nMQQPZUrlCCAgez8LT6S2oCZ9c3HpXRnCV1rtOxWXiiaDpeUxVUoRYNbtAoGBAIS1\nDv+AZ5tKSJ30Yc1/hq/Z74Z4JT0oH8z1fZETBZBE5GlCJ07IpP1nZNf3lCufT+WC\nXG1SpstW03hqiHVfriXRvzvVOGU805GyPUUbQ78xf980/V53dsliWOzTyY9PaS2s\nlX6SOgVBhk3tpYnMLYALGIr5omU94x/iANaMyYVPAoGBAKukKLg/ZBarB0WSM8E/\ngA0+4D2HGWSUsUxuaG0qc4dNalAdpNpLOY9gS8oLjWsKboUXL6/bZaazXCkD6l11\nVv3/HthcC6V/bC8YGMHo6vpMUvYHdcPSgwlAlYUJt4QrvKIrt6QW70lYC/FtwH5s\ni/ovavj0QR3gFpwkQC7tVj5J\n-----END PRIVATE KEY-----\n",
+  "client_email": "marketwatch@report-060918.iam.gserviceaccount.com",
+  "client_id": "105059039836540856481",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/marketwatch%40report-060918.iam.gserviceaccount.com"
+}

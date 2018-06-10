@@ -1,5 +1,16 @@
 #!/usr/local/bin/python3
 '''
+- to use Google Drive Spreadsheet as database -
+https://console.developers.google.com/
+    - enable Google Drive API, Google Sheets API
+https://github.com/burnash/gspread
+http://gspread.readthedocs.io/en/latest/oauth2.html
+
+pip install gspread     ## library package to use Google Spreadsheets
+pip install oauth2client    ## to authorize with Google Drive API
+                            # using OAuth 2.0
+
+- base requirements -
 pip install bs4     ## installs webscrape library package
 pip install lxml    ## install webscrape lexicon for parsing
 (pip install html5lib)  ## optionalL installs second parsing lexicon
@@ -19,21 +30,36 @@ print()
 
 print('=' * 40)
 
+
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+# import pprint
+
+# use creds to create a client to interact with the Google Drive API
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+creds = ServiceAccountCredentials.from_json_keyfile_name('marketwatch_report_client.json', scope)
+client = gspread.authorize(creds)
+
+# Find a Google Sheet workbook by name and open the first sheet
+sheet = client.open("MarketWatch Report").sheet1
+sheet.clear()
+
+sheet_header_row = ['Ticker',
+                    'Price',
+                    'Daily Change',
+                    'Daily Percent',
+                    'YTD',
+                    '1 Year',
+                    '5 Year',
+                    'Last Updated',
+                    'Company',
+                    'Source',
+                    ]
+
 csv_file = open('marketwatch_report.csv', 'w', encoding='utf-8')
 
 csv_writer = csv.writer(csv_file)
-csv_writer.writerow(
-    ['Ticker',
-        'Price',
-        'Daily Change',
-        'Daily Percent',
-        'YTD',
-        '1 Year',
-        '5 Year',
-        'Last Updated',
-        'Company',
-        'Source',
-     ])
+csv_writer.writerow(sheet_header_row)
 
 marketwatch_urlbase = 'https://www.marketwatch.com/investing/'
 
@@ -67,10 +93,12 @@ for symbol in sorted(ticker.keys()):
     print(f'{company_ticker}, {company_market}')
 
     intraday_price = intraday_element.find('h3', class_='intraday__price').text
+    intraday_price = ''.join(intraday_price.split())
+
     change_point = intraday_element.find('span', class_='change--point--q').text
     change_percent = intraday_element.find('span', class_='change--percent--q').text
 
-    print(f'{"".join(intraday_price.split())} ({change_point}, {change_percent})')
+    print(f'{intraday_price} ({change_point}, {change_percent})')
 
     volume = intraday_element.find('div', class_='intraday__volume')
     if volume:
@@ -132,10 +160,9 @@ for symbol in sorted(ticker.keys()):
     print('=' * 40)
 
     Company = soup.title.text.split(' - ')[1]
-    # Clickable_Link = '<a href=\"' + marketwatch_url + '\"">' + Company + '</a>'
+    Clickable_Link = '<a href=\"' + marketwatch_url + '\"">' + Company + '</a>'
 
-    csv_writer.writerow(
-        [company_ticker,
+    data = [company_ticker,
             intraday_price,
             change_point,
             change_percent,
@@ -143,8 +170,16 @@ for symbol in sorted(ticker.keys()):
             Return_1year,
             Return_5year,
             timestamp,
+            # Clickable_Link,
             Company,
             marketwatch_url,
-         ])
+            ]
+
+    sheet.insert_row(data, 1)
+
+    csv_writer.writerow(data)
+
+
+sheet.insert_row(sheet_header_row, 1)
 
 csv_file.close()
