@@ -40,9 +40,20 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('marketwatch_report_cli
 client = gspread.authorize(creds)
 
 # Find a Google Sheet workbook by name and open the first sheet
-spreadsheet_list = client.list_spreadsheet_files()
-spreadsheet = client.open(spreadsheet_list[0].get('name'))
-spreadsheet.sheet1.clear()
+# spreadsheet_list = client.list_spreadsheet_files()
+# spreadsheet = client.open(spreadsheet_list[0].get('name'))
+
+spreadsheet = None
+try:
+    # require spreadsheet name to be 'Marketwatch Report'
+    spreadsheet_title = 'MarketWatch Report'
+    spreadsheet = client.open(spreadsheet_title)
+    spreadsheet.sheet1.clear()
+except:
+    print('Warning: unable to open database!')
+    print(f'Please create a Google Drive Spreadsheet with title "{spreadsheet_title}"')
+    print('Also verify this spreadsheet is shared to JSON "client_email" (Google OAuth Credential)')
+    print('=' * 40)
 
 sheet_header_row = ['Ticker',
                     'Price',
@@ -55,8 +66,8 @@ sheet_header_row = ['Ticker',
                     'Company',
                     'Source',
                     ]
-
-spreadsheet.sheet1.append_row(sheet_header_row)
+if spreadsheet is not None:
+    spreadsheet.sheet1.append_row(sheet_header_row)
 
 csv_file = open('marketwatch_report.csv', 'w', encoding='utf-8')
 
@@ -177,16 +188,20 @@ for symbol in sorted(ticker.keys()):
                 marketwatch_url,
                 ]
 
-    spreadsheet.sheet1.append_row(row_data)
+    if spreadsheet is not None:
+        spreadsheet.sheet1.append_row(row_data)
 
-    try:
-        new_sheet = sheet.add_worksheet(company_ticker, 20, 10)
-        new_sheet.append_row(sheet_header_row)
-    except:
-        new_sheet = sheet.worksheet(company_ticker)
+        try:
+            ticker_sheet = spreadsheet.add_worksheet(company_ticker, 20, 10)
+            ticker_sheet.append_row(sheet_header_row)
+        except:
+            ticker_sheet = spreadsheet.worksheet(company_ticker)
 
-    # store historical ticker info in own sheet, reverse chronological
-    new_sheet.insert_row(row_data, 2)
+        # store historical ticker info in own sheet, reverse chronological
+        # but don't store duplicates
+        stored_timestamp = ticker_sheet.cell(2, 8).value
+        if timestamp != stored_timestamp:
+            ticker_sheet.insert_row(row_data, 2)
 
     csv_writer.writerow(row_data)
 
