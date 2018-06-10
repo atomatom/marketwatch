@@ -30,7 +30,6 @@ print()
 
 print('=' * 40)
 
-
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 # import pprint
@@ -41,8 +40,9 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('marketwatch_report_cli
 client = gspread.authorize(creds)
 
 # Find a Google Sheet workbook by name and open the first sheet
-sheet = client.open("MarketWatch Report").sheet1
-sheet.clear()
+spreadsheet_list = client.list_spreadsheet_files()
+spreadsheet = client.open(spreadsheet_list[0].get('name'))
+spreadsheet.sheet1.clear()
 
 sheet_header_row = ['Ticker',
                     'Price',
@@ -56,7 +56,7 @@ sheet_header_row = ['Ticker',
                     'Source',
                     ]
 
-sheet.append_row(sheet_header_row)
+spreadsheet.sheet1.append_row(sheet_header_row)
 
 csv_file = open('marketwatch_report.csv', 'w', encoding='utf-8')
 
@@ -164,22 +164,30 @@ for symbol in sorted(ticker.keys()):
     Company = soup.title.text.split(' - ')[1]
     Clickable_Link = '<a href=\"' + marketwatch_url + '\"">' + Company + '</a>'
 
-    data = [company_ticker,
-            intraday_price,
-            change_point,
-            change_percent,
-            YTD,
-            Return_1year,
-            Return_5year,
-            timestamp,
-            # Clickable_Link,
-            Company,
-            marketwatch_url,
-            ]
+    row_data = [company_ticker,
+                intraday_price,
+                change_point,
+                change_percent,
+                YTD,
+                Return_1year,
+                Return_5year,
+                timestamp,
+                # Clickable_Link,
+                Company,
+                marketwatch_url,
+                ]
 
-    sheet.append_row(data)
+    spreadsheet.sheet1.append_row(row_data)
 
-    csv_writer.writerow(data)
+    try:
+        new_sheet = sheet.add_worksheet(company_ticker, 20, 10)
+        new_sheet.append_row(sheet_header_row)
+    except:
+        new_sheet = sheet.worksheet(company_ticker)
 
+    # store historical ticker info in own sheet, reverse chronological
+    new_sheet.insert_row(row_data, 2)
+
+    csv_writer.writerow(row_data)
 
 csv_file.close()
