@@ -81,6 +81,7 @@ ticker_stocks = {
     'goog': 'stock', 'fb': 'stock', 'mu': 'stock',
     'nflx': 'stock', 'mchp': 'stock', 'stt': 'stock',
     'dow': 'stock', 'nasdaq': 'stock', 'sp500': 'stock',
+    'hpe': 'stock', 'hpq': 'stock', 'roku': 'stock',
 }
 
 ticker_funds = {
